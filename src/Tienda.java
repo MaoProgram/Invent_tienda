@@ -1,7 +1,6 @@
 import java.util.HashMap; //Optimiza y organiza mejor la informacion guardada "clave:valor"
 import java.util.Map; // se usa para inicializar y crear diccionarios
 import java.util.Scanner;
-
 public class Tienda  {
     private static Map<String, Producto> BasedeDatos = new HashMap<>();
     private static double totalVentas = 0.0; //conteo de las ventas realizadas
@@ -20,18 +19,23 @@ public class Tienda  {
             System.out.print("Elija una opción: ");
 
             opcion = VlIngresado.nextInt();
+            switch (opcion) {
+                case 1:
+                    anadirproducto();
+                    break;
 
-            if (opcion == 1) {
-                anadirproducto();
-                System.out.println("Ha elegido añadir producto");
-            } else if (opcion == 2) {
-                consultarProducto();
-                System.out.println("Ha elegido consultar producto");
-            } else if (opcion == 3) {
-                realizarVenta();
-                System.out.println("Ha elegido realizar venta" + " " + totalVentas);
-            } else {
-                System.out.println("Opción no válida. Por favor, seleccione una opción del 1 al 3.");
+                case 2:
+                    consultarProducto();
+                    break;
+
+                case 3:
+                    realizarVenta();
+                    break;
+
+                default:
+                    System.out.println("Opción no válida. Por favor, seleccione una opción del 1 al 3.");
+                    break;
+
             }
 
         } while (opcion != 3);
@@ -41,7 +45,7 @@ public class Tienda  {
 
     private static void anadirproducto() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Añadir producto:");
+        System.out.println("Ha elegido añadir producto");
 
         System.out.print("Ingrese el código del producto: ");
         String codigo = scanner.nextLine();
@@ -63,7 +67,7 @@ public class Tienda  {
 
     private static void consultarProducto() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Consultar Producto:");
+        System.out.println("Ha elegido consultar producto");
 
         System.out.print("Ingrese el código del producto: ");
         String consulta = scanner.nextLine();
@@ -83,7 +87,7 @@ public class Tienda  {
 
     private static void realizarVenta() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Venta de Producto:");
+        System.out.println("Ha elegido realizar venta");
 
         System.out.print("Ingrese el código del producto a vender: ");
         String codigoVenta = scanner.nextLine();
