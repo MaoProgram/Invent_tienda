@@ -1,9 +1,11 @@
-import java.util.HashMap; //Optimiza y organiza mejor la informacion guardada "clave:valor"
-import java.util.Map; // se usa para inicializar y crear diccionarios
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
-public class Tienda  {
+
+public class Tienda {
     private static Map<String, Producto> BasedeDatos = new HashMap<>();
-    private static double totalVentas = 0.0; //conteo de las ventas realizadas
+    private static double totalVentas = 0.0;
+    private static Inventario inventario = new Inventario();
 
     public static void main(String[] args) {
         Scanner VlIngresado = new Scanner(System.in);
@@ -15,6 +17,8 @@ public class Tienda  {
             System.out.println("1. Añadir Producto");
             System.out.println("2. Consultar Producto");
             System.out.println("3. Realizar Venta");
+            System.out.println("4. Consultar Inventario");
+            System.out.println("5. Salir");
             System.out.println("--------------------");
             System.out.print("Elija una opción: ");
 
@@ -32,13 +36,20 @@ public class Tienda  {
                     realizarVenta();
                     break;
 
-                default:
-                    System.out.println("Opción no válida. Por favor, seleccione una opción del 1 al 3.");
+                case 4:
+                    consultarInventario();
                     break;
 
+                case 5:
+                    System.out.println("Gracias por usar el sistema de la tienda.");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida. Por favor, seleccione una opción del 1 al 5.");
+                    break;
             }
 
-        } while (opcion != 3);
+        } while (opcion != 5);
 
         VlIngresado.close();
     }
@@ -61,7 +72,8 @@ public class Tienda  {
 
         Producto producto = new Producto(codigo, nombre, precio, cantidad);
         BasedeDatos.put(codigo, producto);
-        //en la clase Producto se crean nuevos objetos con los atributos requqridos
+        inventario.agregarProducto(producto);
+
         System.out.println("Producto agregado a la Base de Datos.");
     }
 
@@ -109,6 +121,8 @@ public class Tienda  {
 
                 producto.setCantidad(producto.getCantidad() - cantidadVenta);
                 totalVentas += totalVenta;
+
+                inventario.actualizarCantidad(codigoVenta, producto.getCantidad());
             } else {
                 System.out.println("No hay suficiente cantidad en Stock.");
             }
@@ -116,38 +130,14 @@ public class Tienda  {
             System.out.println("Producto no encontrado en la Base de Datos.");
         }
     }
-}
 
-class Producto {
-    private String codigo;
-    private String nombre;
-    private double precio;
-    private int cantidad;
-
-    public Producto(String codigo, String nombre, double precio, int cantidad) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.cantidad = cantidad;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    private static void consultarInventario() {
+        System.out.println("\nInventario Actual:");
+        Map<String, Integer> inventarioActual = inventario.getInventario();
+        for (Map.Entry<String, Integer> entry : inventarioActual.entrySet()) {
+            String codigo = entry.getKey();
+            int cantidad = entry.getValue();
+            System.out.println("Código: " + codigo + ", Cantidad en inventario: " + cantidad);
+        }
     }
 }
