@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Inventario {
+public class Inventory {
     private Map<String, Integer> inventario = new HashMap<>();
 
     public void agregarProducto(Producto producto) {
