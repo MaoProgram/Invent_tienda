@@ -164,7 +164,7 @@ public class ProductCrud implements IProductservices{
 
     @Override
     public void Searchid() {
-
+//funcion de busqueda por consecutivo de producto
         System.out.println("Please choose the search method\n1.Code\n2.Name\n");
         int selection = 0;
         selection = impresion.nextInt();

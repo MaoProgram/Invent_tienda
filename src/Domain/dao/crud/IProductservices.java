@@ -10,4 +10,5 @@ public interface IProductservices  {
 
     void Searchid();
     void view();
+
 }
